@@ -1,19 +1,25 @@
-import { nanoid } from "nanoid";
+import { randomBytes } from "crypto";
 import type { Session, SessionUser } from "../types";
 import { getColorForIndex } from "../lib/utils";
 import { SESSION_ID_LENGTH, CONTEXT_MAX_LENGTH } from "../lib/constants";
 
+function generateId(length: number): string {
+  return randomBytes(Math.ceil((length * 6) / 8))
+    .toString("base64url")
+    .slice(0, length);
+}
+
 const sessions = new Map<string, Session>();
 
 function generateSessionId(): string {
-  const id = nanoid(SESSION_ID_LENGTH);
+  const id = generateId(SESSION_ID_LENGTH);
   return sessions.has(id) ? generateSessionId() : id;
 }
 
 export function createSession(hostSocketId: string, hostUsername: string): Session {
   const id = generateSessionId();
   const host: SessionUser = {
-    id: `user-${nanoid(8)}`,
+    id: `user-${generateId(8)}`,
     username: hostUsername,
     socketId: hostSocketId,
     joinedAt: Date.now(),
@@ -55,7 +61,7 @@ export function joinSession(
   const trimmed = username.trim().slice(0, 32);
   if (trimmed.length < 2) return { error: "Username too short" };
   const user: SessionUser = {
-    id: `user-${nanoid(8)}`,
+    id: `user-${generateId(8)}`,
     username: trimmed,
     socketId,
     joinedAt: Date.now(),
@@ -85,7 +91,7 @@ export function leaveSession(sessionId: string, socketId: string): Session | nul
 
 export function getSessionBySocket(socketId: string): Session | undefined {
   for (const s of sessions.values()) {
-    if (s.users.some((u) => u.socketId === socketId)) return s;
+    if (s.users.some((u: SessionUser) => u.socketId === socketId)) return s;
   }
   return undefined;
 }

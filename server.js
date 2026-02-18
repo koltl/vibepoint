@@ -1,7 +1,7 @@
 const http = require("http");
 const next = require("next");
 const { Server } = require("socket.io");
-const { attachSocketHandler } = require("./server/socket-handler.js");
+const { attachSocketHandler } = require("./dist/server/socket-handler.js");
 
 const dev = process.env.NODE_ENV !== "production";
 const port = parseInt(process.env.PORT || "3000", 10);
