@@ -53,9 +53,9 @@ export function getSession(sessionId: string): Session | undefined {
 export function getExpiredSessionIds(inactivityMs: number): string[] {
   const now = Date.now();
   const expired: string[] = [];
-  for (const [id, session] of sessions) {
+  sessions.forEach((session, id) => {
     if (now - session.lastActivityAt >= inactivityMs) expired.push(id);
-  }
+  });
   return expired;
 }
 
@@ -113,10 +113,11 @@ export function leaveSession(sessionId: string, socketId: string): Session | nul
 }
 
 export function getSessionBySocket(socketId: string): Session | undefined {
-  for (const s of sessions.values()) {
-    if (s.users.some((u: SessionUser) => u.socketId === socketId)) return s;
-  }
-  return undefined;
+  return (
+    Array.from(sessions.values()).find((s) =>
+      s.users.some((u: SessionUser) => u.socketId === socketId)
+    ) ?? undefined
+  );
 }
 
 export function castVote(sessionId: string, socketId: string, value: string): Session | null {
