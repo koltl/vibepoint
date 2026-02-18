@@ -12,3 +12,6 @@ export const USERNAME_MIN = 2;
 export const USERNAME_MAX = 24;
 
 export const CONTEXT_MAX_LENGTH = 2000;
+
+/** Session is ended after this many ms with no activity (35 minutes). */
+export const SESSION_INACTIVITY_MS = 35 * 60 * 1000;

@@ -55,6 +55,10 @@ export function useSocket() {
       setError(message);
     };
 
+    const onSessionEnded = (_payload: { reason?: string }) => {
+      reset();
+    };
+
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
     socket.on("session_state", onSessionState);
@@ -62,6 +66,7 @@ export function useSocket() {
     socket.on("user_left", onUserLeft);
     socket.on("votes_updated", onVotesUpdated);
     socket.on("error", onError);
+    socket.on("session_ended", onSessionEnded);
 
     if (socket.connected) {
       setSocketId(socket.id ?? null);
@@ -75,8 +80,9 @@ export function useSocket() {
       socket.off("user_left", onUserLeft);
       socket.off("votes_updated", onVotesUpdated);
       socket.off("error", onError);
+      socket.off("session_ended", onSessionEnded);
     };
-  }, [setSocketId, setMe, setState, setError]);
+  }, [setSocketId, setMe, setState, setError, reset]);
 
   return getSocket();
 }

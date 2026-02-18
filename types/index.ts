@@ -17,6 +17,7 @@ export interface Session {
   contextText: string;
   deck: DeckType;
   createdAt: number;
+  lastActivityAt: number;
 }
 
 export interface ClientSessionState {
@@ -35,6 +36,7 @@ export type SocketEvent =
   | "session_state"
   | "user_joined"
   | "user_left"
+  | "session_ended"
   | "cast_vote"
   | "votes_updated"
   | "clear_votes"

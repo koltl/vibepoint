@@ -3,6 +3,10 @@ import type { Session, SessionUser } from "../types";
 import { getColorForIndex } from "../lib/utils";
 import { SESSION_ID_LENGTH, CONTEXT_MAX_LENGTH } from "../lib/constants";
 
+function touchSession(session: Session): void {
+  session.lastActivityAt = Date.now();
+}
+
 function generateId(length: number): string {
   return randomBytes(Math.ceil((length * 6) / 8))
     .toString("base64url")
@@ -25,6 +29,7 @@ export function createSession(hostSocketId: string, hostUsername: string): Sessi
     joinedAt: Date.now(),
     color: getColorForIndex(0),
   };
+  const now = Date.now();
   const session: Session = {
     id,
     hostSocketId,
@@ -33,7 +38,8 @@ export function createSession(hostSocketId: string, hostUsername: string): Sessi
     revealed: false,
     contextText: "",
     deck: "fibonacci",
-    createdAt: Date.now(),
+    createdAt: now,
+    lastActivityAt: now,
   };
   sessions.set(id, session);
   return session;
@@ -41,6 +47,21 @@ export function createSession(hostSocketId: string, hostUsername: string): Sessi
 
 export function getSession(sessionId: string): Session | undefined {
   return sessions.get(sessionId);
+}
+
+/** Returns session IDs that have had no activity for at least `inactivityMs`. */
+export function getExpiredSessionIds(inactivityMs: number): string[] {
+  const now = Date.now();
+  const expired: string[] = [];
+  for (const [id, session] of sessions) {
+    if (now - session.lastActivityAt >= inactivityMs) expired.push(id);
+  }
+  return expired;
+}
+
+/** Removes a session. Returns true if it existed. */
+export function deleteSession(sessionId: string): boolean {
+  return sessions.delete(sessionId);
 }
 
 export function sessionExists(sessionId: string): boolean {
@@ -68,6 +89,7 @@ export function joinSession(
     color: getColorForIndex(session.users.length),
   };
   session.users.push(user);
+  touchSession(session);
   return { session, user };
 }
 
@@ -80,6 +102,7 @@ export function leaveSession(sessionId: string, socketId: string): Session | nul
     sessions.delete(sessionId);
     return null;
   }
+  touchSession(session);
   if (session.hostSocketId === socketId) {
     const nextHost = session.users.reduce((a, b) =>
       a.joinedAt < b.joinedAt ? a : b
@@ -102,6 +125,7 @@ export function castVote(sessionId: string, socketId: string, value: string): Se
   const allowed = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "89", "?", "☕"];
   if (!allowed.includes(value)) return session;
   session.votes[socketId] = value;
+  touchSession(session);
   return session;
 }
 
@@ -111,6 +135,7 @@ export function clearVotes(sessionId: string): Session | null {
   session.votes = {};
   session.revealed = false;
   session.contextText = "";
+  touchSession(session);
   return session;
 }
 
@@ -118,6 +143,7 @@ export function revealVotes(sessionId: string): Session | null {
   const session = sessions.get(sessionId);
   if (!session) return null;
   session.revealed = true;
+  touchSession(session);
   return session;
 }
 
@@ -125,6 +151,7 @@ export function hideVotes(sessionId: string): Session | null {
   const session = sessions.get(sessionId);
   if (!session) return null;
   session.revealed = false;
+  touchSession(session);
   return session;
 }
 
@@ -132,6 +159,7 @@ export function updateContext(sessionId: string, contextText: string): Session |
   const session = sessions.get(sessionId);
   if (!session) return null;
   session.contextText = String(contextText).slice(0, CONTEXT_MAX_LENGTH);
+  touchSession(session);
   return session;
 }
 
@@ -139,6 +167,7 @@ export function changeDeck(sessionId: string, deck: "fibonacci" | "custom"): Ses
   const session = sessions.get(sessionId);
   if (!session) return null;
   session.deck = deck;
+  touchSession(session);
   return session;
 }
 

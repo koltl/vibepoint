@@ -13,9 +13,22 @@ import {
   updateContext,
   changeDeck,
   toClientState,
+  getExpiredSessionIds,
+  deleteSession,
 } from "./store";
+import { SESSION_INACTIVITY_MS } from "../lib/constants";
+
+const INACTIVITY_CHECK_INTERVAL_MS = 60 * 1000; // 1 minute
 
 export function attachSocketHandler(io: Server) {
+  setInterval(() => {
+    const expiredIds = getExpiredSessionIds(SESSION_INACTIVITY_MS);
+    for (const sessionId of expiredIds) {
+      io.to(sessionId).emit("session_ended", { reason: "inactivity" });
+      deleteSession(sessionId);
+    }
+  }, INACTIVITY_CHECK_INTERVAL_MS);
+
   io.on("connection", (socket) => {
     socket.on("create_session", (username: string, cb?: (sessionId: string | null) => void) => {
       const trimmed = String(username || "").trim().slice(0, 32);
