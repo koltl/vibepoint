@@ -77,28 +77,29 @@ export function PlayersReveal() {
                       <span className="text-white/50 font-normal ml-1">(you)</span>
                     )}
                   </p>
-                  {state.revealed && value !== undefined ? (
-                    <motion.p
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.1 + i * 0.06 }}
-                      className="text-lg font-bold tabular-nums mt-0.5"
-                      style={{ color: user.color }}
-                    >
-                      {value}
-                    </motion.p>
-                  ) : voted ? (
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="text-sm text-emerald-400/90 mt-0.5 flex items-center gap-1"
-                    >
-                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Voted
-                    </motion.p>
-                  ) : (
-                    <p className="text-sm text-white/40 mt-0.5">Waiting…</p>
-                  )}
+                  <div className="min-h-[22px] flex items-center mt-0.5">
+                    {state.revealed && value !== undefined ? (
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.1 + i * 0.06 }}
+                        className="text-sm font-bold tabular-nums text-white/90"
+                      >
+                        {value}
+                      </motion.span>
+                    ) : voted ? (
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="text-sm text-emerald-400/90 flex items-center gap-1.5"
+                      >
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                        Voted
+                      </motion.span>
+                    ) : (
+                      <span className="text-sm text-white/40">Waiting…</span>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             </motion.li>
