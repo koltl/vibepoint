@@ -97,7 +97,7 @@ export function ContextPanel() {
             value={local}
             onChange={(e) => setLocal(e.target.value)}
             onBlur={handleBlur}
-            placeholder="Paste in a ticket link or describe the item…"
+            placeholder="Paste in a ticket link or describe what is being pointed…"
             className={cn(
               "w-full min-h-[80px] rounded-xl border bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 resize-y transition-colors",
               "focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/30 border-white/10"
