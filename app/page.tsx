@@ -100,7 +100,7 @@ export default function LandingPage() {
             <Button
               size="lg"
               className="w-full h-14 text-lg rounded-2xl"
-              onClick={() => setMode("create")}
+              onClick={() => { setError(""); setMode("create"); }}
             >
               Start a session
             </Button>
@@ -108,7 +108,7 @@ export default function LandingPage() {
               variant="outline"
               size="lg"
               className="w-full h-14 text-lg rounded-2xl"
-              onClick={() => setMode("join")}
+              onClick={() => { setError(""); setMode("join"); }}
             >
               Join with link
             </Button>
@@ -131,7 +131,7 @@ export default function LandingPage() {
             />
             {error && <p className="text-sm text-rose-400">{error}</p>}
             <div className="flex gap-2">
-              <Button variant="ghost" className="flex-1" onClick={() => setMode("choose")}>
+              <Button variant="ghost" className="flex-1" onClick={() => { setError(""); setMode("choose"); }}>
                 Back
               </Button>
               <Button className="flex-1" onClick={handleStartSession} disabled={creating}>
@@ -162,7 +162,7 @@ export default function LandingPage() {
             />
             {error && <p className="text-sm text-rose-400">{error}</p>}
             <div className="flex gap-2">
-              <Button variant="ghost" className="flex-1" onClick={() => setMode("choose")}>
+              <Button variant="ghost" className="flex-1" onClick={() => { setError(""); setMode("choose"); }}>
                 Back
               </Button>
               <Button className="flex-1" onClick={handleJoinSession} disabled={joining}>
