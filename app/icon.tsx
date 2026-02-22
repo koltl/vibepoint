@@ -3,7 +3,11 @@ import { ImageResponse } from "next/og";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-export default function Icon() {
+export default async function Icon() {
+  const fontData = await fetch(
+    "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2"
+  ).then((res) => res.arrayBuffer());
+
   return new ImageResponse(
     (
       <div
@@ -17,11 +21,23 @@ export default function Icon() {
           borderRadius: 8,
           fontSize: 16,
           color: "white",
+          fontFamily: "Inter",
         }}
       >
         ◆
       </div>
     ),
-    { width: size.width, height: size.height }
+    {
+      width: size.width,
+      height: size.height,
+      fonts: [
+        {
+          name: "Inter",
+          data: fontData,
+          weight: 400,
+          style: "normal",
+        },
+      ],
+    }
   );
 }
