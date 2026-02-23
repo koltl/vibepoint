@@ -49,6 +49,17 @@ Optional:
 - `PORT` — Server port (default `3000`)
 - `NEXT_PUBLIC_PORT` — Same as `PORT` when frontend and backend differ (e.g. dev proxy)
 
+## Docker
+
+Build and run with Docker:
+
+```bash
+docker build -t vibepoint .
+docker run -p 3000:3000 vibepoint
+```
+
+Override the port with `-e PORT=8080` (and map it: `-p 8080:8080`).
+
 ## Deployment
 
 ### Vercel (frontend) + Railway / Fly.io (Socket.IO server)
