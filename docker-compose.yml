@@ -8,3 +8,9 @@ services:
       - NODE_ENV=production
       - PORT=3000
     restart: unless-stopped
+    networks:
+      - web-traffic
+  
+networks:
+  web-traffic:
+    external: true
