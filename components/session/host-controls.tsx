@@ -45,7 +45,7 @@ export function HostControls() {
         <Button
           size="sm"
           className={cn(
-            "w-full",
+            "w-full min-h-[44px] sm:min-h-8",
             allVoted() && canReveal && "animate-pulse-soft shadow-indigo-500/30"
           )}
           onClick={toggleReveal}
@@ -53,7 +53,7 @@ export function HostControls() {
         >
           {state.revealed ? "Hide votes" : "Reveal votes"}
         </Button>
-        <Button variant="outline" size="sm" className="w-full" onClick={clear} disabled={!canClear}>
+        <Button variant="outline" size="sm" className="w-full min-h-[44px] sm:min-h-8" onClick={clear} disabled={!canClear}>
           Clear & reset
         </Button>
       </div>

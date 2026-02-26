@@ -50,10 +50,10 @@ export function VotingCards() {
 
   return (
     <section className="flex flex-col gap-3">
-      <h2 className="text-xs font-medium text-white/50 uppercase tracking-wider">
+      <h2 className="text-xs font-medium text-white/50 uppercase tracking-wider md:block">
         Your vote
       </h2>
-      <div className="flex flex-wrap gap-1.5 justify-center">
+      <div className="grid grid-cols-4 gap-2.5 sm:gap-3 md:flex md:flex-wrap md:justify-center md:gap-1.5">
         {deck.map((value, i) => (
           <VoteCard
             key={value}
@@ -64,7 +64,7 @@ export function VotingCards() {
           />
         ))}
       </div>
-      <p className="text-center text-xs text-white/40 mt-2">0–9, ?, C</p>
+      <p className="text-center text-xs text-white/40 mt-2 hidden md:block">0–9, ?, C</p>
     </section>
   );
 }
@@ -90,13 +90,16 @@ function VoteCard({
       whileTap={{ scale: 0.96 }}
       transition={{ type: "spring", stiffness: 400, damping: 28 }}
       className={cn(
-        "relative w-11 h-14 md:w-12 md:h-16 rounded-lg overflow-hidden",
+        "relative rounded-xl overflow-hidden touch-manipulation",
         "flex items-center justify-center",
         "border transition-all duration-300",
-        "text-lg md:text-xl font-bold tabular-nums text-white/90 drop-shadow-sm",
+        "text-white/90 drop-shadow-sm",
+        "w-full min-h-[72px] sm:min-h-[80px]",
+        "text-2xl sm:text-3xl font-bold tabular-nums",
+        "md:w-12 md:h-16 md:min-h-0 md:text-xl md:rounded-lg md:flex-initial",
         selected
           ? "border-indigo-400/80 shadow-lg shadow-indigo-500/25 ring-2 ring-indigo-400/50 bg-indigo-500/20"
-          : "border-white/12 bg-gradient-to-br from-white/[0.08] to-white/[0.02] hover:border-white/25 hover:from-white/[0.12] hover:to-white/[0.04]"
+          : "border-white/12 bg-gradient-to-br from-white/[0.08] to-white/[0.02] hover:border-white/25 hover:from-white/[0.12] hover:to-white/[0.04] active:from-white/[0.15]"
       )}
     >
       {isCoffee ? "☕" : value}

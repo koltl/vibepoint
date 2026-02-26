@@ -17,7 +17,7 @@ export function SessionStats() {
   const max = numericValues.length ? Math.max(...numericValues) : null;
 
   return (
-    <section className="flex items-center justify-center gap-6 py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white/60">
+    <section className="flex items-center justify-center gap-4 sm:gap-6 py-3 px-3 sm:px-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white/60 min-h-[48px]">
       <span className="tabular-nums">
         <span className="text-white/80 font-medium">{voted}</span>
         <span className="mx-1">/</span>

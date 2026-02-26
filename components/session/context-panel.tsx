@@ -86,9 +86,9 @@ export function ContextPanel() {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
-      className="glass rounded-2xl p-4 min-h-[120px]"
+      className="glass rounded-2xl p-3 sm:p-4 md:min-h-[120px]"
     >
-      <label className="block text-xs font-medium text-white/50 uppercase tracking-wider mb-2">
+      <label className="block text-[10px] sm:text-xs font-medium text-white/50 uppercase tracking-wider mb-1.5 sm:mb-2">
         Context
       </label>
       {isHost ? (
@@ -99,7 +99,7 @@ export function ContextPanel() {
             onBlur={handleBlur}
             placeholder="Paste in a ticket link or describe what is being pointed…"
             className={cn(
-              "w-full min-h-[80px] rounded-xl border bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 resize-y transition-colors",
+              "w-full min-h-[72px] sm:min-h-[80px] rounded-xl border bg-white/5 px-3 py-2.5 sm:px-4 sm:py-3 text-base sm:text-sm text-white placeholder:text-white/40 resize-y transition-colors touch-manipulation",
               "focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/30 border-white/10"
             )}
             maxLength={2000}
@@ -134,7 +134,10 @@ export function ContextPanel() {
           )}
         </div>
       ) : (
-        <div className="min-h-[52px] rounded-xl bg-white/5 px-4 py-3 text-sm text-white/90 whitespace-pre-wrap break-words">
+        <div
+          className="min-h-[44px] sm:min-h-[52px] rounded-xl bg-white/5 px-3 py-2.5 sm:px-4 sm:py-3 text-base sm:text-sm text-white/90 whitespace-pre-wrap break-words line-clamp-2 sm:line-clamp-none md:line-clamp-none"
+          title={state.contextText || local || undefined}
+        >
           <ClientLinkifiedContent text={state.contextText || local} />
         </div>
       )}

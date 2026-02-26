@@ -36,21 +36,21 @@ export function SessionBar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 glass-strong border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 h-14 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 min-w-0">
-            <span className="font-mono text-sm text-white/70 truncate">{state.id}</span>
-            <Button variant="ghost" size="sm" onClick={copyLink} className="shrink-0">
+      <header className="sticky top-0 z-40 glass-strong border-b border-white/10 safe-area-padding">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 min-h-[52px] sm:min-h-[56px] flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <span className="font-mono text-xs sm:text-sm text-white/70 truncate max-w-[80px] sm:max-w-none">{state.id}</span>
+            <Button variant="ghost" size="sm" onClick={copyLink} className="shrink-0 min-h-[44px] min-w-[44px] sm:min-h-8 sm:min-w-0 px-3 sm:px-2 text-sm">
               Copy link
             </Button>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {!isHost && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setVoteOnlyView(!voteOnlyView)}
-                className="shrink-0"
+                className="shrink-0 min-h-[44px] min-w-[44px] sm:min-h-8 sm:min-w-0 px-3 sm:px-2 text-sm"
               >
                 {voteOnlyView ? "Full view" : "Vote only"}
               </Button>
@@ -58,14 +58,14 @@ export function SessionBar() {
             {isHost && (
               <span
                 className={cn(
-                  "text-xs font-medium px-2.5 py-1 rounded-lg",
+                  "text-xs font-medium px-2.5 py-1.5 sm:py-1 rounded-lg",
                   "bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
                 )}
               >
                 Host
               </span>
             )}
-            <Button variant="ghost" size="sm" onClick={leaveSession}>
+            <Button variant="ghost" size="sm" onClick={leaveSession} className="min-h-[44px] min-w-[44px] sm:min-h-8 sm:min-w-0 px-3 sm:px-2 text-sm">
               Leave
             </Button>
           </div>
