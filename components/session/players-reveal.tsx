@@ -109,7 +109,7 @@ export function PlayersReveal() {
       <h2 className="text-xs font-medium text-white/50 uppercase tracking-wider mb-4">
         {state.revealed ? "Results" : "Players"} ({state.users.length})
       </h2>
-      <ul className="flex flex-wrap gap-4 justify-center md:justify-start">
+      <ul className="flex flex-wrap gap-4 justify-start">
         {sorted.map((user, i) => {
           const value = state.revealed ? state.votes[user.socketId] : undefined;
           const voted = user.socketId in state.votes;

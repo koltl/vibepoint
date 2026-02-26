@@ -135,7 +135,7 @@ export function ContextPanel() {
         </div>
       ) : (
         <div
-          className="min-h-[44px] sm:min-h-[52px] rounded-xl bg-white/5 px-3 py-2.5 sm:px-4 sm:py-3 text-base sm:text-sm text-white/90 whitespace-pre-wrap break-words line-clamp-2 sm:line-clamp-none md:line-clamp-none"
+          className="min-h-[44px] sm:min-h-[52px] max-h-[120px] sm:max-h-none md:max-h-none rounded-xl bg-white/5 px-3 py-2.5 sm:px-4 sm:py-3 text-base sm:text-sm text-white/90 whitespace-pre-wrap break-words overflow-y-auto overscroll-contain sm:line-clamp-none md:line-clamp-none"
           title={state.contextText || local || undefined}
         >
           <ClientLinkifiedContent text={state.contextText || local} />
