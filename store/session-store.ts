@@ -18,10 +18,12 @@ interface SessionStore {
   me: SessionUser | null;
   state: ClientSessionState | null;
   error: string | null;
+  voteOnlyView: boolean;
   setSocketId: (id: string | null) => void;
   setMe: (user: SessionUser | null) => void;
   setState: (state: ClientSessionState | null) => void;
   setError: (error: string | null) => void;
+  setVoteOnlyView: (voteOnlyView: boolean) => void;
   reset: () => void;
   isHost: () => boolean;
   myVote: () => string | undefined;
@@ -35,16 +37,19 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
   me: null,
   state: null,
   error: null,
+  voteOnlyView: false,
   setSocketId: (socketId) => set({ socketId }),
   setMe: (me) => set({ me }),
   setState: (state) => set({ state, error: null }),
   setError: (error) => set({ error }),
+  setVoteOnlyView: (voteOnlyView) => set({ voteOnlyView }),
   reset: () =>
     set({
       socketId: null,
       me: null,
       state: null,
       error: null,
+      voteOnlyView: false,
     }),
   isHost: () => {
     const { socketId, state } = get();

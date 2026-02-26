@@ -12,6 +12,8 @@ export function SessionBar() {
   const router = useRouter();
   const state = useSessionStore((s) => s.state);
   const isHost = useSessionStore((s) => s.isHost());
+  const voteOnlyView = useSessionStore((s) => s.voteOnlyView);
+  const setVoteOnlyView = useSessionStore((s) => s.setVoteOnlyView);
   const [toast, setToast] = useState(false);
 
   const copyLink = useCallback(() => {
@@ -43,6 +45,16 @@ export function SessionBar() {
             </Button>
           </div>
           <div className="flex items-center gap-2 shrink-0">
+            {!isHost && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setVoteOnlyView(!voteOnlyView)}
+                className="shrink-0"
+              >
+                {voteOnlyView ? "Full view" : "Vote only"}
+              </Button>
+            )}
             {isHost && (
               <span
                 className={cn(
