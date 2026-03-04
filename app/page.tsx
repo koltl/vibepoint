@@ -88,6 +88,9 @@ export default function LandingPage() {
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
             VibePoint
           </h1>
+          <p className="text-white/70 text-base">
+            Scrum poker & planning poker for agile teams
+          </p>
           <p className="text-white/50 text-sm">Story point estimation, in sync.</p>
         </div>
 
@@ -171,6 +174,15 @@ export default function LandingPage() {
             </div>
           </motion.div>
         )}
+
+        <section className="text-center space-y-3 pt-4 border-t border-white/10">
+          <h2 className="text-lg font-semibold text-white/90">
+            Planning poker for agile teams
+          </h2>
+          <p className="text-sm text-white/60 max-w-md mx-auto">
+            VibePoint is a free planning poker (Scrum poker) tool for real-time story point estimation. Run remote planning poker sessions with your agile or Scrum team—no sign-up required. Share a link and start estimating together.
+          </p>
+        </section>
       </motion.div>
     </main>
   );
